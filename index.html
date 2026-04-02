@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/logo.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Government of Balochistan Portal</title>
+    
+    <!-- Google Fonts: Inter & Noto Nastaliq Urdu -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS Script via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <!-- Accessibility Skip to Main Content -->
+    <a href="#main-content"
+       class="sr-only focus:not-sr-only focus:absolute
+       focus:top-0 focus:left-0 focus:z-[100]
+       focus:bg-gov-gold focus:text-black focus:p-3">
+       Skip to main content
+    </a>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
