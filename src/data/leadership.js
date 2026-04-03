@@ -55,7 +55,7 @@ export const LEADERS = [
     urduName: "شکیل قادر خان",
     title: "Chief Secretary, Balochistan",
     urduTitle: "چیف سیکرٹری بلوچستان",
-    photo: null,
+    photo: "/images/leadership/cs.png",
     initials: "SQK",
     quote: "Serving as a key advisor to the Chief Minister and highest-ranking officer overseeing all 26 government departments.",
     bio: [

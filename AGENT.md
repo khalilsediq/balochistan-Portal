@@ -120,4 +120,5 @@
 ### 11. CHANGELOG
   - **v1.0.0 — [2026-04-02]** — Initial build by AI agent. All pages scaffolded, all components created.
   - **v1.1.0 — [2026-04-02]** — Integrated official Balochistan government assets (logo, leadership, and landscape images) for a robust and authentic UI experience.
+  - **v1.2.0 — [2026-04-03]** — Automated acquisition and integration of official web imagery (Chief Secretary, citizen services, PMDU, news & event graphics) from balochistan.gov.pk to replace application placeholders.
 ---
