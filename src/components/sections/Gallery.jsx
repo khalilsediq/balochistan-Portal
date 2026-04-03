@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import SectionHeader from '../ui/SectionHeader';
@@ -5,6 +6,20 @@ import Lightbox from '../ui/Lightbox';
 import { GALLERY_ITEMS } from '../../data/gallery';
 import { useLanguage } from '../../context/LanguageContext';
 import { Eye } from 'lucide-react';
+import { motion } from 'framer-motion';
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: { 
+    opacity: 1, 
+    transition: { staggerChildren: 0.15 } 
+  }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, scale: 0.9 },
+  visible: { opacity: 1, scale: 1, transition: { duration: 0.5, ease: "easeOut" } }
+};
 
 export default function Gallery() {
   const { t } = useLanguage();
@@ -29,10 +44,17 @@ export default function Gallery() {
           subtitle="Glimpses of development, heritage, and the natural beauty of Balochistan."
         />
         
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-4 mt-12">
+        <motion.div 
+          className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-4 mt-12"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+        >
           {gallerySlice.map((item, index) => (
-            <div 
-              key={item.id} 
+            <motion.div 
+              key={item.id}
+              variants={itemVariants}
               className="group relative aspect-video overflow-hidden rounded cursor-pointer bg-gray-200"
               onClick={() => openLightbox(index)}
             >
@@ -56,9 +78,9 @@ export default function Gallery() {
                   </span>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         <div className="mt-10 text-center">
           <Link to="/gallery" className="text-gov-green font-semibold hover:text-gov-green-light underline underline-offset-4">
