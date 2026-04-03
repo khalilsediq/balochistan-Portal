@@ -1,75 +1,106 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useLanguage } from '../../context/LanguageContext';
 import { X, ChevronRight } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
-export default function MobileMenu({ isOpen, onClose, getNavLinkClass }) {
+export default function MobileMenu({ isOpen, onClose }) {
   const { t, language } = useLanguage();
 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 lg:hidden flex">
-      {/* Backdrop */}
-      <div 
-        className="fixed inset-0 bg-black/50 transition-opacity"
-        onClick={onClose}
-        aria-hidden="true"
-      ></div>
-
-      {/* Slide-in Menu */}
-      <div className="relative flex-1 flex flex-col max-w-xs w-full bg-white shadow-xl animate-[slide-in-right_0.3s_ease-out]">
-        <div className="absolute top-0 right-0 -mr-12 pt-4">
-          <button
-            type="button"
-            className="ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white bg-gov-dark"
+    <AnimatePresence>
+      {isOpen && (
+        <div className="fixed inset-0 z-50 lg:hidden flex">
+          {/* Backdrop */}
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm"
             onClick={onClose}
+            aria-hidden="true"
+          ></motion.div>
+
+          {/* Slide-in Menu */}
+          <motion.div 
+            initial={{ x: '-100%' }}
+            animate={{ x: 0 }}
+            exit={{ x: '-100%' }}
+            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            className="relative flex-1 flex flex-col max-w-[85vw] sm:max-w-xs w-full bg-white shadow-2xl z-10"
           >
-            <span className="sr-only">Close sidebar</span>
-            <X className="h-6 w-6 text-white" aria-hidden="true" />
-          </button>
-        </div>
-
-        <div className="flex bg-gov-green px-4 py-5 items-center">
-          <div className="h-10 w-10 bg-white rounded-full flex items-center justify-center mr-3 overflow-hidden">
-            <img src="/logo.png" alt="Logo" className="w-8 h-8 object-contain" onError={(e) => e.target.style.display = 'none'} />
-          </div>
-          <span className="text-white font-bold text-lg leading-tight uppercase">Govt of Balochistan</span>
-        </div>
-
-        <div className="flex-1 h-0 pt-5 pb-4 overflow-y-auto">
-          <nav className="mt-5 px-4 space-y-1">
-            {[
-              { path: "/", label: "nav.home" },
-              { path: "/about", label: "nav.about" },
-              { path: "/departments", label: "nav.departments" },
-              { path: "/leadership", label: "nav.leadership" },
-              { path: "/e-services", label: "nav.services" },
-              { path: "/news", label: "nav.news" },
-              { path: "/tenders", label: "nav.tenders" },
-              { path: "/jobs", label: "nav.jobs" },
-              { path: "/gallery", label: "nav.gallery" },
-              { path: "/contact", label: "nav.contact" },
-            ].map((item) => (
-              <NavLink
-                key={item.path}
-                to={item.path}
+            <div className="absolute top-0 right-0 -mr-12 sm:-mr-14 pt-4">
+              <motion.button
+                whileHover={{ scale: 1.1, rotate: 90 }}
+                whileTap={{ scale: 0.9 }}
+                type="button"
+                className="ml-1 flex items-center justify-center h-10 w-10 sm:h-12 sm:w-12 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white bg-gov-dark border-2 border-white/20 shadow-lg"
                 onClick={onClose}
-                className={({ isActive }) => `flex items-center justify-between px-3 py-3 rounded-md text-base font-medium ${isActive ? 'bg-gov-green/10 text-gov-green' : 'text-gray-900 hover:bg-gray-50'}`}
               >
-                <span className={language === 'ur' ? 'font-urdu' : ''}>{t(item.label)}</span>
-                <ChevronRight className="w-4 h-4 text-gray-400" />
-              </NavLink>
-            ))}
-          </nav>
+                <span className="sr-only">Close sidebar</span>
+                <X className="h-6 w-6 text-white" aria-hidden="true" />
+              </motion.button>
+            </div>
+
+            <div className="flex bg-gradient-to-r from-gov-green to-gov-green-light px-4 py-6 items-center shadow-md">
+              <div className="h-12 w-12 bg-white rounded-full flex items-center justify-center mr-4 overflow-hidden border border-gray-100 shadow-sm shrink-0">
+                <img src="/logo.png" alt="Logo" className="w-9 h-9 object-contain" onError={(e) => e.target.style.display = 'none'} />
+              </div>
+              <span className="text-white font-bold text-lg sm:text-xl leading-tight uppercase relative truncate">
+                Govt of Balochistan
+              </span>
+            </div>
+
+            <div className="flex-1 h-0 pt-3 pb-4 overflow-y-auto w-full custom-scrollbar">
+              <nav className="mt-2 px-3 space-y-1">
+                {[
+                  { path: "/", label: "nav.home" },
+                  { path: "/about", label: "nav.about" },
+                  { path: "/departments", label: "nav.departments" },
+                  { path: "/leadership", label: "nav.leadership" },
+                  { path: "/e-services", label: "nav.services" },
+                  { path: "/news", label: "nav.news" },
+                  { path: "/tenders", label: "nav.tenders" },
+                  { path: "/jobs", label: "nav.jobs" },
+                  { path: "/gallery", label: "nav.gallery" },
+                  { path: "/contact", label: "nav.contact" },
+                ].map((item, index) => (
+                  <motion.div
+                    key={item.path}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.1 + index * 0.05 }}
+                  >
+                    <NavLink
+                      to={item.path}
+                      onClick={onClose}
+                      className={({ isActive }) => `flex items-center justify-between px-4 py-3 rounded-xl text-base font-medium transition-all ${isActive ? 'bg-gov-green/10 text-gov-green shadow-sm' : 'text-gray-700 hover:bg-gray-100/80 hover:text-gov-green'} w-full`}
+                    >
+                      <span className={language === 'ur' ? 'font-urdu' : ''}>{t(item.label)}</span>
+                      <ChevronRight className="w-4 h-4 text-gray-400 opacity-70" />
+                    </NavLink>
+                  </motion.div>
+                ))}
+              </nav>
+            </div>
+            
+            <div className="flex-shrink-0 flex border-t border-gray-100 p-5 bg-white">
+              <motion.button 
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="flex-shrink-0 w-full group block text-center rounded-xl bg-gov-green py-3 px-4 text-base font-bold text-white shadow-md hover:bg-gov-green-light transition-colors"
+                onClick={onClose}
+              >
+                {language === 'en' ? 'Citizen Portal Login' : 'سٹیزن پورٹل لاگ ان'}
+              </motion.button>
+            </div>
+          </motion.div>
         </div>
-        
-        <div className="flex-shrink-0 flex border-t border-gray-200 p-4">
-          <button className="flex-shrink-0 w-full group block text-center rounded-md border-2 border-gov-gold py-2 text-sm font-medium text-gov-gold hover:bg-gov-gold hover:text-white transition-colors">
-            {language === 'en' ? 'Citizen Portal Login' : 'سٹیزن پورٹل لاگ ان'}
-          </button>
-        </div>
-      </div>
-    </div>
+      )}
+    </AnimatePresence>
   );
 }

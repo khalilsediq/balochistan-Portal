@@ -178,7 +178,7 @@ export default function ContactPage() {
                 </li>
                 <li className="flex items-center">
                   <Phone className="w-5 h-5 text-gov-gold mr-3 shrink-0" />
-                  <span dir="ltr">+92-81-9201601</span>
+                  <span dir="ltr">+923708911924</span>
                 </li>
                 <li className="flex items-center">
                   <Mail className="w-5 h-5 text-gov-gold mr-3 shrink-0" />

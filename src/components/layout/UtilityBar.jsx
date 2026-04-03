@@ -10,7 +10,7 @@ export default function UtilityBar() {
       <div className="flex items-center space-x-6 mb-2 sm:mb-0" dir="ltr">
         <span className="flex items-center">
           <Phone className="w-3 h-3 mr-2 text-gov-gold" />
-          +92-81-9201601
+          +923708911924
         </span>
         <span className="hidden md:flex items-center">
           <Mail className="w-3 h-3 mr-2 text-gov-gold" />

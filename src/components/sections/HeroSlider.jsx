@@ -1,7 +1,9 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronRight, ChevronLeft } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function HeroSlider() {
   const { language } = useLanguage();
@@ -55,7 +57,10 @@ export default function HeroSlider() {
           }`}
         >
           {/* Background Image with Fallback */}
-          <div 
+          <motion.div 
+            initial={{ scale: 1.1 }}
+            animate={index === currentSlide ? { scale: 1 } : { scale: 1.1 }}
+            transition={{ duration: 6, ease: "easeOut" }}
             className="absolute inset-0 w-full h-full bg-cover bg-center"
             style={{ 
               backgroundImage: 'linear-gradient(135deg, #1B4F2A, #2d7a47)' 
@@ -68,27 +73,40 @@ export default function HeroSlider() {
               loading={index === 0 ? "eager" : "lazy"}
               onError={(e) => { e.target.style.display = 'none'; }}
             />
-          </div>
+          </motion.div>
 
           <div className="absolute inset-0 bg-black/40"></div>
           
           {/* Content */}
           <div className="absolute inset-0 flex items-center justify-center text-center px-4 sm:px-6 lg:px-8">
-            <div className="max-w-4xl mx-auto drop-shadow-2xl animate-fade-in-up">
-              <h1 className={`text-4xl sm:text-5xl lg:text-7xl font-bold text-white mb-4 sm:mb-6 leading-tight ${language === 'ur' ? 'font-urdu' : ''}`}>
-                {language === 'en' ? slide.title : slide.urduTitle}
-              </h1>
-              <p className={`text-lg sm:text-xl lg:text-2xl text-gray-200 mb-8 sm:mb-12 font-medium ${language === 'ur' ? 'font-urdu' : ''}`}>
-                {language === 'en' ? slide.subtitle : slide.urduSubtitle}
-              </p>
-              <Link 
-                to={slide.link}
-                className="inline-flex items-center px-6 py-3 sm:px-8 sm:py-4 border-2 border-gov-gold bg-gov-gold/90 text-[#1a1a1a] text-sm sm:text-lg font-bold rounded hover:bg-gov-gold hover:scale-105 transition-all shadow-lg"
-              >
-                {language === 'en' ? 'Explore More' : 'مزید دریافت کریں'}
-                <ChevronRight className="ml-2 w-5 h-5" />
-              </Link>
-            </div>
+            <AnimatePresence mode="wait">
+              {index === currentSlide && (
+                <motion.div 
+                  key={index}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -30 }}
+                  transition={{ duration: 0.8, delay: 0.3 }}
+                  className="max-w-4xl mx-auto drop-shadow-2xl"
+                >
+                  <h1 className={`text-4xl sm:text-5xl lg:text-7xl font-bold text-white mb-4 sm:mb-6 leading-tight ${language === 'ur' ? 'font-urdu' : ''}`}>
+                    {language === 'en' ? slide.title : slide.urduTitle}
+                  </h1>
+                  <p className={`text-lg sm:text-xl lg:text-2xl text-gray-200 mb-8 sm:mb-12 font-medium ${language === 'ur' ? 'font-urdu' : ''}`}>
+                    {language === 'en' ? slide.subtitle : slide.urduSubtitle}
+                  </p>
+                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                    <Link 
+                      to={slide.link}
+                      className="inline-flex items-center px-6 py-3 sm:px-8 sm:py-4 border-2 border-gov-gold bg-gov-gold/90 text-[#1a1a1a] text-sm sm:text-lg font-bold rounded hover:bg-gov-gold transition-colors shadow-lg"
+                    >
+                      {language === 'en' ? 'Explore More' : 'مزید دریافت کریں'}
+                      <ChevronRight className="ml-2 w-5 h-5" />
+                    </Link>
+                  </motion.div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         </div>
       ))}
